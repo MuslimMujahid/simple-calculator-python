@@ -17,7 +17,7 @@ class GUI:
         
         # Form Ekspresi
         self.form = Text(root, state='disabled', width=30, height=2,background="white", foreground="black")
-        self.form.grid(row=0,column=0,columnspan=4,padx=5,pady=5)
+        self.form.grid(row=0,column=0,columnspan=4,padx=10,pady=12)
         self.form.configure(state='normal')
    
     def pushToForm(self, exp_form, newline=False):
@@ -42,7 +42,7 @@ class GUI:
         self.list.append(self.onClick(7))
         self.list.append(self.onClick(8))
         self.list.append(self.onClick(9))
-        self.list.append(self.onClick("clear",None))
+        self.list.append(self.onClick("clear",None, 'tomato'))
         self.list.append(self.onClick(4))
         self.list.append(self.onClick(5))
         self.list.append(self.onClick(6))
@@ -60,10 +60,10 @@ class GUI:
 
     def grid_bottom(self):
         # kegunaan : mengatur grid
-        equalButton = self.onClick('=',None,9).grid(row=6,column=3,columnspan=1)
-        powerButton = self.onClick('^').grid(row=6,column=0,columnspan=1)
-        openButton = self.onClick(u"\u0028").grid(row=6,column=1,columnspan=1)
-        closeButton = self.onClick(u"\u0029").grid(row=6,column=2,columnspan=1)
+        equalButton = self.onClick('=',None,'DarkOliveGreen2').grid(row=6,column=3,columnspan=1, padx = 1, pady = 1)
+        powerButton = self.onClick('^').grid(row=6,column=0,columnspan=1, padx = 1, pady = 1)
+        openButton = self.onClick(u"\u0028").grid(row=6,column=1,columnspan=1, padx = 1, pady = 1)
+        closeButton = self.onClick(u"\u0029").grid(row=6,column=2,columnspan=1, padx = 1, pady = 1)
 
     def grid_up(self):
         # kegunaan : mengatur grid
@@ -71,13 +71,13 @@ class GUI:
         i=1
         while (i<6):
             for j in range(4):
-                self.list[index].grid(row=i, column=j)
+                self.list[index].grid(row=i, column=j, columnspan = 1, padx = 1, pady = 1)
                 index=index+1
             i=i+1
 
-    def onClick(self, _text, push=True,width=9):
+    def onClick(self, _text, push=True, _color = 'ivory'):
         # kegunaan : event-handler button dan memasukannya ke Form satu per satu
-        return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text, push), width=9)
+        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.Parse(_text, push))
 
     def parseExpAkar(self, express):
         # kegunaan : membuat ekspresi akar menjadi ekspresi python
