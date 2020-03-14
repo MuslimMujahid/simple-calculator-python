@@ -45,7 +45,7 @@ class GUI:
         self.list.append(self.onClick(4))
         self.list.append(self.onClick(5))
         self.list.append(self.onClick(6))
-        self.list.append(self.onClick(u"\u00F7"))
+        self.list.append(self.onClick("/"))
         self.list.append(self.onClick(1))
         self.list.append(self.onClick(2))
         self.list.append(self.onClick(3))
@@ -101,7 +101,6 @@ class GUI:
             self.pushToForm(getExpr)
         else:   
             if (getExpr == '='): 
-                self.expression = self.expression.replace(u"\u00F7", '/')
                 if (u"\u221A" in self.expression):
                     self.expression = self.parseExpAkar(self.expression)
                 if ("ans" in self.expression):
