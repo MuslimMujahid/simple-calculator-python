@@ -107,5 +107,5 @@ class GUI:
                 self.pushToScreen(self.history.pop(), newline=True)
 
 root = Tk()
-my_gui = GUI(root)
+create = GUI(root)
 root.mainloop()
