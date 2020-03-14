@@ -64,8 +64,8 @@ class GUI:
                 index=index+1
             i=i+1
 
-    def onClick(self,_text,write=True,width=9):
-        return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text,write), width=width)
+    def onClick(self, _text, push=True,width=9):
+        return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text, push), width=width)
 
     def parseExpAkar(self,b):
         akar = u"\u221A"
@@ -84,28 +84,27 @@ class GUI:
             i+=1
         return newExp
 
-    def Parse(self,text,write):
-        if (write != None):
-            self.pushToScreen(text)
+    def Parse(self, getExpr, push=True):
+        if (push != None):
+            self.pushToScreen(getExpr)
         else:   
-            if (text == '='): 
+            if (getExpr == '='): 
                 self.expression = self.expression.replace(u"\u00F7", '/')
                 if (u"\u221A" in self.expression):
                     self.expression = self.parseExpAkar(self.expression)
                 if ("ans" in self.expression):
-                    self.expression = self.expression.replace("ans",str(self.ans))
-                print(type(self.expression))
-                answer = str(eval(self.expression))
-                self.ans = answer
+                    self.expression = self.expression.replace("ans", str(self.ans))
+                print(self.expression)
+                result = eval(self.expression)
+                self.ans = result
                 self.deleteScreen()
-                self.pushToScreen(answer,newline=True)
-                print(self.ans)
-            elif text == "clear":
+                self.pushToScreen(result, newline=True)
+            elif getExpr == "clear":
                 self.deleteScreen()
-            elif text == "MC":
+            elif getExpr == "MC":
                 self.history.append(self.ans)
-            elif text == "MR":
-                self.pushToScreen(self.history.pop(),newline=True)
+            elif getExpr == "MR":
+                self.pushToScreen(self.history.pop(), newline=True)
 
 root = Tk()
 my_gui = GUI(root)
