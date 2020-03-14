@@ -103,12 +103,9 @@ class GUI:
                 print(self.ans)
             elif text == "clear":
                 self.deleteScreen()
-            # elif text == "ans":
             elif text == "MC":
                 self.history.append(self.ans)
             elif text == "MR":
-                # self.expression+=(self.history.pop())
-                # answer = str((self.expression))
                 self.pushToScreen(self.history.pop(),newline=True)
 
      
