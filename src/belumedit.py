@@ -60,6 +60,7 @@ class GUI:
     def grid_bottom(self):
         # kegunaan : mengatur grid
         equalButton = self.onClick('=',None,9).grid(row=6,column=3,columnspan=1)
+        powerButton = self.onClick('^').grid(row=6,column=0,columnspan=1)
         openButton = self.onClick(u"\u0028").grid(row=6,column=1,columnspan=1)
         closeButton = self.onClick(u"\u0029").grid(row=6,column=2,columnspan=1)
 
@@ -103,6 +104,8 @@ class GUI:
             if (getExpr == '='): 
                 if (u"\u221A" in self.expression):
                     self.expression = self.parseExpAkar(self.expression)
+                if ("^" in self.expression):
+                    self.expression = self.expression.replace("^", "**")
                 if ("ans" in self.expression):
                     self.expression = self.expression.replace("ans", str(self.ans))
                 print(self.expression)
