@@ -15,17 +15,17 @@ class GUI:
         self.screen.grid(row=0,column=0,columnspan=4,padx=5,pady=5)
         self.screen.configure(state='normal')
    
+    def pushToScreen(self, exp_form, newline=False):
+        self.screen.configure(state='normal')
+        self.screen.insert(END, exp_form)
+        self.expression += str(exp_form)
+        self.screen.configure(state ='disabled')
+
     def deleteScreen(self):
         self.expression = ''
         self.screen.configure(state='normal')
         self.screen.delete('1.0', END)
-
-    def pushToScreen(self, value,newline=False):
-        self.screen.configure(state='normal')
-        self.screen.insert(END,value)
-        self.expression += str(value)
-        self.screen.configure(state ='disabled')
-
+    
     def getButtonToScreen(self):    
         self.list.append(self.onClick(u"\u221A"))
         self.list.append(self.onClick('MC',None))
@@ -64,7 +64,6 @@ class GUI:
                 index=index+1
             i=i+1
 
-        
     def onClick(self,_text,write=True,width=9):
         return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text,write), width=width)
 
@@ -107,9 +106,6 @@ class GUI:
                 self.history.append(self.ans)
             elif text == "MR":
                 self.pushToScreen(self.history.pop(),newline=True)
-
-     
-
 
 root = Tk()
 my_gui = GUI(root)
