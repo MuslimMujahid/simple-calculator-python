@@ -1,73 +1,58 @@
 from tkinter import *
 from  tkinter import ttk
 
-class Calculator:
-    def __init__(self, master):
-        self.master = master
-        master.title("Python Calculator")
+class GUI:
+    def __init__(self, root):
+        root.title("Tubes Kalkulator")
         
-        # create screen widget
-        self.screen = Text(master, state='disabled', width=30, height=2,background="white", foreground="black")
-
-        # position screen in window
+        self.root = root
+        self.list = []
+        self.screen = Text(root, state='disabled', width=30, height=2,background="white", foreground="black")
         self.screen.grid(row=0,column=0,columnspan=4,padx=5,pady=5)
         self.screen.configure(state='normal')
 
-        # initialize screen value as empty
         self.equation = ''
-        
-        # create buttons using method createButton
-        b1 =  self.createButton(7)
-        b2 = self.createButton(8)
-        b3 = self.createButton(9)
-        #b4 = self.createButton(u"\u232B",None)
-        b4 = self.createButton("erase",None)
-        b5 = self.createButton(4)
-        b6 = self.createButton(5)
-        b7 = self.createButton(6)
-        b8 = self.createButton(u"\u00F7")
-        b9 = self.createButton(1)
-        b10 = self.createButton(2)
-        b11 = self.createButton(3)
-        b12 = self.createButton('*')
-        b13 = self.createButton(0)
-        b14 = self.createButton('.')
-        b15 = self.createButton('+')
-        b16 = self.createButton('-')
-        b17 = self.createButton('=',None,9)
-        b18 = self.createButton(u"\u221A")
-        b19 = self.createButton('MC')
-        b20 = self.createButton('MR')
-        b21 = self.createButton('ans')
-        b22 = self.createButton(u"\u0028")
-        b23 = self.createButton(u"\u0029")
-        
 
-        # buttons stored in list
-        buttons = [b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21]
+        self.list.append(self.onClick(u"\u221A"))
+        self.list.append(self.onClick('MC'))
+        self.list.append(self.onClick('MR'))
+        self.list.append(self.onClick('ans'))
+        self.list.append(self.onClick(7))
+        self.list.append(self.onClick(8))
+        self.list.append(self.onClick(9))
+        self.list.append(self.onClick("clear",None))
+        self.list.append(self.onClick(4))
+        self.list.append(self.onClick(5))
+        self.list.append(self.onClick(6))
+        self.list.append(self.onClick(u"\u00F7"))
+        self.list.append(self.onClick(1))
+        self.list.append(self.onClick(2))
+        self.list.append(self.onClick(3))
+        self.list.append(self.onClick('*'))
+        self.list.append(self.onClick(0))
+        self.list.append(self.onClick('.'))
+        self.list.append(self.onClick('+'))
+        self.list.append(self.onClick('-'))
+        self.grid_up()
+        self.grid_bottom()
 
-        # intialize counter
-        count = 0
-        # arrange buttons with grid manager
-        for row in range(1,5):
-            for column in range(4):
-                buttons[count].grid(row=row,column=column)
-                count += 1
-        # arrange last button '=' at the bottom
-        buttons[16].grid(row=6,column=0,columnspan=1)
-        b22.grid(row=6,column=1,columnspan=1)
-        b23.grid(row=6,column=2,columnspan=1)
-        i = 17
-        k = 0
-        while (i<=20 and k<=3):
-            buttons[i].grid(row=5,column=k)
-            i+=1
-            k+=1
+    def grid_up(self):
+        index=0
+        i=1
+        while (i<6):
+            for j in range(4):
+                self.list[index].grid(row=i, column=j)
+                index=index+1
+            i=i+1
+
+    def grid_bottom(self):
+        equalButton = self.onClick('=',None,9).grid(row=6,column=3,columnspan=1)
+        openButton = self.onClick(u"\u0028").grid(row=6,column=1,columnspan=1)
+        closeButton = self.onClick(u"\u0029").grid(row=6,column=2,columnspan=1)
+
         
-
-    def createButton(self,val,write=True,width=9):
-        # this function creates a button, and takes one compulsory argument, the value that should be on the button
-        return ttk.Button(self.master, text=val,command = lambda: self.click(val,write), width=width)
+    def onClick(self,val,write=True,width=9):
+        return ttk.Button(self.root, text=val,command = lambda: self.click(val,write), width=width)
 
     def parseExpAkar(self,b):
         k = u"\u221A"
@@ -98,7 +83,7 @@ class Calculator:
                 answer = str(eval(self.equation))
                 self.clear_screen()
                 self.insert_screen(answer,newline=True)
-            elif text == "erase":
+            elif text == "clear":
                 self.clear_screen()
         else:   
             self.insert_screen(text)
@@ -116,5 +101,5 @@ class Calculator:
         self.screen.configure(state ='disabled')
 
 root = Tk()
-my_gui = Calculator(root)
+my_gui = GUI(root)
 root.mainloop()
