@@ -67,20 +67,20 @@ class GUI:
     def onClick(self, _text, push=True,width=9):
         return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text, push), width=9)
 
-    def parseExpAkar(self,b):
+    def parseExpAkar(self, express):
         akar = u"\u221A"
         newExp = ''
         i = 0
-        while (i<len(b)):
-            if (b[i] == akar):
+        while (i<len(express)):
+            if (express[i] == akar):
                 j = i+1
-                while (j<len(b) and b[j] not in '+-/*'):
-                    newExp+=b[j]
+                while (j<len(express) and express[j] not in '+-/*'):
+                    newExp+=express[j]
                     j+=1
                     i+=1
                 newExp += '**0.5' 
             else:   
-                newExp+=b[i]
+                newExp+=express[i]
             i+=1
         return newExp
 
