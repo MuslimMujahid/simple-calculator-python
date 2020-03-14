@@ -40,6 +40,9 @@ class Calculator:
         b19 = self.createButton('MC')
         b20 = self.createButton('MR')
         b21 = self.createButton('ans')
+        b22 = self.createButton(u"\u0028")
+        b23 = self.createButton(u"\u0029")
+        
 
         # buttons stored in list
         buttons = [b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21]
@@ -53,6 +56,8 @@ class Calculator:
                 count += 1
         # arrange last button '=' at the bottom
         buttons[16].grid(row=6,column=0,columnspan=1)
+        b22.grid(row=6,column=1,columnspan=1)
+        b23.grid(row=6,column=2,columnspan=1)
         i = 17
         k = 0
         while (i<=20 and k<=3):
@@ -77,6 +82,8 @@ class Calculator:
             if text == '=' and self.equation: 
                 # replace the unicode value of division ./.with python division symbol / using regex
                 self.equation= re.sub(u"\u00F7", '/', self.equation)
+                print(type(self.equation))
+                # self.equation= re.sub(u"\u221A", '**', self.equation)
                 print(self.equation)
                 answer = str(eval(self.equation))
                 self.clear_screen()
