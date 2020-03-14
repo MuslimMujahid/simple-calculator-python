@@ -1,6 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 
+# kelas GUI menghandle button, karena nama "Button" meng-overload fungsi bawaan tkinter Button.
 class GUI:
     def __init__(self, root):
         root.title("Tubes Kalkulator")
