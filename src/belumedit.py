@@ -80,7 +80,6 @@ class GUI:
                 if (u"\u221A" in self.equation):
                     self.equation = self.parseExpAkar(self.equation)
                 print(self.equation)
-                answer = str(eval(self.equation))
                 self.clear_screen()
                 self.insert_screen(answer,newline=True)
             elif text == "clear":
