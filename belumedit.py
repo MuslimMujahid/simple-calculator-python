@@ -65,7 +65,7 @@ class GUI:
             i=i+1
 
     def onClick(self, _text, push=True,width=9):
-        return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text, push), width=width)
+        return ttk.Button(self.root, text=_text, command = lambda: self.Parse(_text, push), width=9)
 
     def parseExpAkar(self,b):
         akar = u"\u221A"
