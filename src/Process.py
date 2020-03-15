@@ -1,4 +1,4 @@
-from parser import Parser
+from Parser import Parser
 from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression

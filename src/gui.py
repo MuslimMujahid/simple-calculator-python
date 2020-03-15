@@ -1,22 +1,25 @@
 from tkinter import *
 from  tkinter import ttk
+from button import CustomButton
 
 class GUI:
     def __init__(self, root):
+        self.root = root
+        root.configure(background = 'black')
         root.title("Calculator")
         # Constructor queue history, tombol answer, dan parsing expression
         #self.history = []
         #self.ans = None
         # self.expression = ''
-        self.root = root
+        
 
         # Push Grid Button
         self.list = []
         self.getButtonToForm()
         
         # Form Ekspresi
-        self.form = Text(root, state='disabled', width=30, height=2,background="white", foreground="black")
-        self.form.grid(row=0,column=0,columnspan=4,padx=10,pady=12)
+        self.form = Text(root, state='disabled', width=30, height=4,background= "black", foreground="white")
+        self.form.grid(row=0,column=0,columnspan=4,padx=5,pady=20)
         self.form.configure(state='normal')
    
     def pushToForm(self, exp_form, newline=False):
@@ -34,35 +37,35 @@ class GUI:
     
     def getButtonToForm(self):    
         # kegunaan : membuat button kalkulator
-        self.list.append(self.onClick(u"\u221A"))
-        self.list.append(self.onClick('MC',None))
-        self.list.append(self.onClick('MR',None))
-        self.list.append(self.onClick('ans'))
-        self.list.append(self.onClick(7))
-        self.list.append(self.onClick(8))
-        self.list.append(self.onClick(9))
-        self.list.append(self.onClick("clear",None, 'tomato'))
-        self.list.append(self.onClick(4))
-        self.list.append(self.onClick(5))
-        self.list.append(self.onClick(6))
-        self.list.append(self.onClick("/"))
-        self.list.append(self.onClick(1))
-        self.list.append(self.onClick(2))
-        self.list.append(self.onClick(3))
-        self.list.append(self.onClick('*'))
-        self.list.append(self.onClick(0))
-        self.list.append(self.onClick('.'))
-        self.list.append(self.onClick('+'))
-        self.list.append(self.onClick('-'))
+        self.list.append(CustomButton('MC', 'light pink'))
+        self.list.append(CustomButton('MR', 'light pink'))
+        self.list.append(CustomButton("CLEAR",'light coral'))
+        self.list.append(CustomButton('^', 'khaki'))
+        self.list.append(CustomButton(7))
+        self.list.append(CustomButton(8))
+        self.list.append(CustomButton(9))
+        self.list.append(CustomButton(u"\u221A", 'khaki'))
+        self.list.append(CustomButton(4))
+        self.list.append(CustomButton(5))
+        self.list.append(CustomButton(6))
+        self.list.append(CustomButton("/", 'khaki'))
+        self.list.append(CustomButton(1))
+        self.list.append(CustomButton(2))
+        self.list.append(CustomButton(3))
+        self.list.append(CustomButton('*', 'khaki'))
+        self.list.append(CustomButton(0))
+        self.list.append(CustomButton('.'))
+        self.list.append(CustomButton('+'))
+        self.list.append(CustomButton('-', 'khaki'))
         self.grid_up()
         self.grid_bottom()
 
     def grid_bottom(self):
         # kegunaan : mengatur grid
-        equalButton = self.onClick('=',None,'DarkOliveGreen2').grid(row=6,column=3,columnspan=1, padx = 1, pady = 1)
-        powerButton = self.onClick('^').grid(row=6,column=0,columnspan=1, padx = 1, pady = 1)
-        openButton = self.onClick(u"\u0028").grid(row=6,column=1,columnspan=1, padx = 1, pady = 1)
-        closeButton = self.onClick(u"\u0029").grid(row=6,column=2,columnspan=1, padx = 1, pady = 1)
+        equalButton = CustomButton('=','DarkSeaGreen2').grid(row=6,column=3)
+        powerButton = CustomButton('ANS').grid(row=6,column=0)
+        openButton = CustomButton(u"\u0028").grid(row=6,column=1)
+        closeButton = CustomButton(u"\u0029").grid(row=6,column=2)
 
     def grid_up(self):
         # kegunaan : mengatur grid
@@ -70,13 +73,13 @@ class GUI:
         i=1
         while (i<6):
             for j in range(4):
-                self.list[index].grid(row=i, column=j, columnspan = 1, padx = 1, pady = 1)
+                self.list[index].grid(row=i, column=j)
                 index=index+1
             i=i+1
 
     def onClick(self, _text, push=True, _color = 'ivory'):
         # kegunaan : event-handler button dan memasukannya ke Form satu per satu
-        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.controller(_text, push))
+        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.Parse(_text, push))
 
     def root(self):
         return self.root

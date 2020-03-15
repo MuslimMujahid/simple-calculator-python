@@ -1,4 +1,4 @@
-from parser import Parser
+from Parser import Parser
 from Process import Process
 from gui import GUI
 import queue
