@@ -1,54 +1,38 @@
+from Expression.UnaryExpression.TerminalExpression import TerminalExpression
+from Expression.UnaryExpression.NegativeExpression import NegativeExpression
+from Expression.BinaryExpression.AddExpression import AddExpression
+from Expression.BinaryExpression.SubExpression import SubExpression
+from Expression.BinaryExpression.MulExpression import MulExpression
+from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.BinaryExpression.PowerExpression import PowerExpression
+from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 import re, collections
 
-expr = '2^2'    
-expr = re.findall('[\d.]+|[)(*-/+^v]', expr)
+class Parser:
+    def __init__(self, string):
+        self.__expr = []
+        charList = re.findall('[\d.]+|[)(*-/+^v]', string)
+        i = 0
+        try:
+            while(i < len(charList)):
+                if charList[i].isnumeric():
+                    self.__expr.append(TerminalExpression(int(charList[i])))
+                elif charList[i] == "-":
+                    if(i == 0):
+                        i += 1
+                        self.__expr.append(NegativeExpression(int(charList[i])))
+                    elif(charList[i-1] == "(" or charList[i-1] == ")"):
+                        i += 1
+                        self.__expr.append(NegativeExpression(int(charList[i])))
+                    else:
+                        int(charList[i-1])
+                        self.__expr.append('-')
+                else:
+                    self.__expr.append(charList[i])
+                i += 1
 
-def examine(expr):
-    print(expr)
-    if '(' not in expr:
-        return calc(expr)
-    else:
-        lpr = 0
-        rpr = 0
-        lpr_count = 0
-        for i in range(len(expr)):
-            if expr[i] == '(':
-                if lpr_count == 0:
-                    lpr = i
-                lpr_count += 1
-            if expr[i] == ')':
-                if lpr_count == 1:
-                    rpr = i
-                    break
-                lpr_count -= 1
-        return examine(expr[:lpr] + examine(expr[lpr+1:rpr]) + expr[rpr+1:])
+        except IndexError as IE:
+            raise Exception("The expression at the end of operation is false")
 
-def calc(expr):
-    print(expr)
-    if len(expr) == 3:
-        if expr[1] == '+':
-            return [str(float(expr[0]) + float(expr[2]))]
-        if expr[1] == '-':
-            return [str(float(expr[0]) - float(expr[2]))]
-        if expr[1] == '*':
-            return [str(float(expr[0]) * float(expr[2]))]
-        if expr[1] == '/':
-            return [str(float(expr[0]) / float(expr[2]))]
-        if expr[1] == '^':
-            return [str(float(expr[0])**float(expr[2]))]
-        if expr[1] == 'v':
-            return [str(float(expr[0])**(1/float(expr[2])))]
-    if '^' in expr or 'v' in expr:
-        for i in range(len(expr)):
-            if expr[i] == '^' or expr[i] == 'v':
-                return calc(expr[:i-1] + calc(expr[i-1:i+2]) + expr[i+2:])
-    if '/' in expr or '*' in expr:
-        for i in range(len(expr)):
-            if expr[i] == '*' or expr[i] == '/':
-                return calc(expr[:i-1] + calc(expr[i-1:i+2]) + expr[i+2:])
-    else:
-        for i in range(len(expr)):
-            if expr[i] == '+' or expr[i] == '-':
-                return calc(calc(expr[:i+2]) + expr[i+2:])
-
-print(examine(expr))
+    def expression(self):
+        return self.__expr
