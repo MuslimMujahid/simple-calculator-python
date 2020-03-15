@@ -1,4 +1,4 @@
-from UnaryExpression import UnaryExpression
+from .UnaryExpression import UnaryExpression
 
 class NegativeExpression(UnaryExpression):
     def __init__(self, value):
