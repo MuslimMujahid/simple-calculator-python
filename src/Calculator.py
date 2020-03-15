@@ -15,36 +15,38 @@ class Calculator:
         for expression in self.expr:
             print(expression)
 
-    def getResult(self):
-        if len(self.expr) == 3:
-            if self.expr[1] == '+':
-                return AddExpression(self.expr[0], self.expr[2]).solve()
-            if self.expr[1] == '-':
-                return SubExpression(self.expr[0], self.expr[2]).solve()
-            if self.expr[1] == '*':
-                return MulExpression(self.expr[0], self.expr[2]).solve()
-            if self.expr[1] == '/':
-                return DivExpression(self.expr[0], self.expr[2]).solve()
+    def getResult(self, expr = None):
+        if(expr == None):
+            expr = self.expr
+        if len(expr) == 3:
+            if expr[1] == '+':
+                return [AddExpression(expr[0], expr[2])]
+            if expr[1] == '-':
+                return [SubExpression(expr[0], expr[2])]
+            if expr[1] == '*':
+                return [MulExpression(expr[0], expr[2])]
+            if expr[1] == '/':
+                return [DivExpression(expr[0], expr[2])]
         
-        if '/' in self.expr or '*' in self.expr:
-            for i in range(len(self.expr)):
-                expmiddle = self.expr[i-1:i+2]
-                expright  = self.expr[i-1:i+2]
-                expleft   = self.expr[:i-1]
-                if self.expr[i] == '*' or self.expr[i] == '/':
-                    return  Calculator(expleft).getResult() + Calculator(expmiddle).getResult() + Calculator(expright).getResult()
+        if '^' in expr or 'v' in expr:
+            for i in range(len(expr)):
+                if expr[i] == '^' or expr[i] == 'v':
+                    return self.getResult(expr[:i-1] + Calculator(expr[i-1:i+2]).getResult() + expr[i+2:])
+        
+        if '/' in expr or '*' in expr:
+            for i in range(len(expr)):
+                if expr[i] == '*' or expr[i] == '/':
+                    return  self.getResult(expr[:i-1] + Calculator(expr[i-1:i+2]).getResult() + expr[i+2:])
         
         else:
-            for i in range(len(self.expr)):
-                if self.expr[i] == '+' or self.expr[i] == '-':
-                    expleft  = self.expr[:i+2]
-                    expright = self.expr[i+2:]
-                    return Calculator(expleft).getResult() + Calculator(expright).getResult()
+            for i in range(len(expr)):
+                if expr[i] == '+' or expr[i] == '-':
+                    return self.getResult(Calculator(expr[:i+2]).getResult() + expr[i+2:])
 
     
     def examine(self):
-        if '(' not in expr:
-            if ")" not in expr:
+        if '(' not in self.expr:
+            if ")" not in self.expr:
                 return self.getResult()
             else:
                 raise Exception("You are missing a closing bracket")
@@ -64,8 +66,7 @@ class Calculator:
                         break
                     lpr_count -= 1
             return examine(expr[:lpr] + examine(self.expr[lpr+1:rpr]) + self.expr[rpr+1:])
+        
 
-
-a = Calculator("5+2+3")
-a.printInfo()
+a = Calculator("5-2*3")
 print(a.getResult())
