@@ -1,57 +1,44 @@
 from Expression.UnaryExpression.TerminalExpression import TerminalExpression
-from Expression.BinaryExpression.AddExpression import AddExpression
-from Expression.BinaryExpression.SubExpression import SubExpression
-from Expression.BinaryExpression.MulExpression import MulExpression
-from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.UnaryExpression.NegativeExpression import NegativeExpression
+
 import re, collections
 
-expr = '(2+4*(5-2)-4)/2/(2/2)'    
-expr = re.findall('[\d.]+|[)(*-/+]', expr)
+# expr = '(2+4*(-5-2)-4)/2/(2/2)'
+# added = 0
+# expr = re.findall('[\d.]+|[)(*-/+]', expr)
+# i = 0
 
-def toClass(expr):
-    for i in range(len(expr)):
-        if expr[i].isnumeric():
-            expr[i] = TerminalExpression(expr[i])
-    return expr
+class Parser:
+    def __init__(self, string):
+        self.expr = []
+        i = 0
+        try:
+            while(i < len(string)):
+                if string[i].isnumeric():
+                    self.expr.append(TerminalExpression(int(string[i])))
+                
+                elif string[i] == "-":
+                    if(i == 0):
+                        i += 1
+                        self.expr.append(NegativeExpression(int(string[i])))
+                    elif(string[i-1] == "(" or string[i-1] == ")"):
+                        i += 1
+                        self.expr.append(NegativeExpression(int(string[i])))
+                    else:
+                        int(string[i-1])
+                        self.expr.append('-')
+                
+                elif string[i] in "+*/()":
+                    self.expr.append(string[i])
+                
+                i += 1
+        except IndexError as IE:
+            raise Exception("The expression at the end of operation is false")
 
-expr = toClass(expr)
+    #debugging method
+    def printInfo(self):
+        for string in self.expr:
+            print(string)
 
-def calc(expr):
-    if len(expr) == 3:
-        if expr[1] == '+':
-            return [AddExpression(expr[0], expr[2])]
-        if expr[1] == '-':
-            return [SubExpression(expr[0], expr[2])]
-        if expr[1] == '*':
-            return [MulExpression(expr[0], expr[2])]
-        if expr[1] == '/':
-            return [DivExpression(expr[0], expr[2])]
-    if '/' in expr or '*' in expr:
-        for i in range(len(expr)):
-            if expr[i] == '*' or expr[i] == '/':
-                return calc(expr[:i-1] + calc(expr[i-1:i+2]) + expr[i+2:])
-    else:
-        for i in range(len(expr)):
-            if expr[i] == '+' or expr[i] == '-':
-                return calc(calc(expr[:i+2]) + expr[i+2:])
-
-def examine(expr):
-    if '(' not in expr:
-        return calc(expr)
-    else:
-        lpr = 0
-        rpr = 0
-        lpr_count = 0
-        for i in range(len(expr)):
-            if expr[i] == '(':
-                if lpr_count == 0:
-                    lpr = i
-                lpr_count += 1
-            if expr[i] == ')':
-                if lpr_count == 1:
-                    rpr = i
-                    break
-                lpr_count -= 1
-        return examine(expr[:lpr] + examine(expr[lpr+1:rpr]) + expr[rpr+1:])
-
-print(examine(expr)[0].solve())
+    def getExpression(self):
+        return self.expr
