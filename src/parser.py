@@ -1,12 +1,7 @@
-from Expression.UnaryExpression.TerminalExpression import TerminalExpression
-from Expression.BinaryExpression.AddExpression import AddExpression
-from Expression.BinaryExpression.SubExpression import SubExpression
-from Expression.BinaryExpression.MulExpression import MulExpression
-from Expression.BinaryExpression.DivExpression import DivExpression
 import re, collections
 
-expr = '(2+4*(5-2)-4)/2/(2/2)'    
-expr = re.findall('[\d.]+|[)(*-/+]', expr)
+expr = '2^2'    
+expr = re.findall('[\d.]+|[)(*-/+^v]', expr)
 
 def examine(expr):
     print(expr)
@@ -39,6 +34,14 @@ def calc(expr):
             return [str(float(expr[0]) * float(expr[2]))]
         if expr[1] == '/':
             return [str(float(expr[0]) / float(expr[2]))]
+        if expr[1] == '^':
+            return [str(float(expr[0])**float(expr[2]))]
+        if expr[1] == 'v':
+            return [str(float(expr[0])**(1/float(expr[2])))]
+    if '^' in expr or 'v' in expr:
+        for i in range(len(expr)):
+            if expr[i] == '^' or expr[i] == 'v':
+                return calc(expr[:i-1] + calc(expr[i-1:i+2]) + expr[i+2:])
     if '/' in expr or '*' in expr:
         for i in range(len(expr)):
             if expr[i] == '*' or expr[i] == '/':
@@ -47,6 +50,5 @@ def calc(expr):
         for i in range(len(expr)):
             if expr[i] == '+' or expr[i] == '-':
                 return calc(calc(expr[:i+2]) + expr[i+2:])
-        
-# print(examine(expr))
-print(AddExpression(TerminalExpression(2), TerminalExpression(2)).solve())
+
+print(examine(expr))

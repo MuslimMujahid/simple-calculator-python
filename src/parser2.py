@@ -3,11 +3,12 @@ from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.BinaryExpression.PowerExpression import PowerExpression
+from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 import re, collections
 
-expr = '(2+4*(5-2)-4)/2/(2/2)'    
-expr = re.findall('[\d.]+|[)(*-/+]', expr)
-
+expr = '(4/2^2)v3'    
+expr = re.findall('[\d.]+|[)(*-/+^v]', expr)
 def toClass(expr):
     for i in range(len(expr)):
         if expr[i].isnumeric():
@@ -26,6 +27,14 @@ def calc(expr):
             return [MulExpression(expr[0], expr[2])]
         if expr[1] == '/':
             return [DivExpression(expr[0], expr[2])]
+        if expr[1] == '^':
+            return [PowerExpression(expr[0], expr[2])]
+        if expr[1] == 'v':
+            return [SqrtExpression(expr[0], expr[2])]
+    if '^' in expr or 'v' in expr:
+        for i in range(len(expr)):
+            if expr[i] == '^' or expr[i] == 'v':
+                return calc(expr[:i-1] + calc(expr[i-1:i+2]) + expr[i+2:])
     if '/' in expr or '*' in expr:
         for i in range(len(expr)):
             if expr[i] == '*' or expr[i] == '/':
@@ -36,6 +45,7 @@ def calc(expr):
                 return calc(calc(expr[:i+2]) + expr[i+2:])
 
 def examine(expr):
+    print(expr)
     if '(' not in expr:
         return calc(expr)
     else:
