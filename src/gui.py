@@ -76,8 +76,13 @@ class GUI:
 
     def onClick(self, _text, push=True, _color = 'ivory'):
         # kegunaan : event-handler button dan memasukannya ke Form satu per satu
-        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.Parse(_text, push))
+        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.controller(_text, push))
 
+    def root(self):
+        return self.root
+
+    def controller(self, getExpr, push=True):
+        pass
     # def parseExpAkar(self, express):
     #     # kegunaan : membuat ekspresi akar menjadi ekspresi python
     #     akar = u"\u221A"
@@ -120,6 +125,6 @@ class GUI:
     #         elif getExpr == "MR":
     #             self.pushToForm(self.history.pop(), newline=True)
 
-root = Tk()
-create = GUI(root)
-root.mainloop()
+# root = Tk()
+# create = GUI(root)
+# root.mainloop()
