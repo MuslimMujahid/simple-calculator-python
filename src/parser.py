@@ -9,27 +9,20 @@ from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 import re, collections
 
 class Parser:
+    '''
+    string : string
+    
+    self.__expr : list
+    '''
     def __init__(self, string):
-        self.__expr = []
-        charList = re.findall('[\d.]+|[)(*-/+^v]', string)
-        i = 0
+        string = re.findall('[\d.]+|[)(*-/+^v]', string)
         try:
-            while(i < len(charList)):
-                if charList[i].isnumeric():
-                    self.__expr.append(TerminalExpression(int(charList[i])))
-                elif charList[i] == "-":
-                    if(i == 0):
-                        i += 1
-                        self.__expr.append(NegativeExpression(int(charList[i])))
-                    elif(charList[i-1] == "(" or charList[i-1] == ")"):
-                        i += 1
-                        self.__expr.append(NegativeExpression(int(charList[i])))
-                    else:
-                        int(charList[i-1])
-                        self.__expr.append('-')
-                else:
-                    self.__expr.append(charList[i])
-                i += 1
+            if string[0] == '-':
+                string = [NegativeExpression(TerminalExpression(string[1]))] + string[2:]     
+            for i in range(len(string)):
+                if string[i].isnumeric():
+                    string[i] = TerminalExpression(string[i])
+            self.__expr = string                
 
         except IndexError as IE:
             raise Exception("The expression at the end of operation is false")

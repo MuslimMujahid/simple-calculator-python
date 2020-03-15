@@ -3,15 +3,20 @@ from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 
 class Process:
     def __init__(self, expr):
-        self.__result = self.calculate(expr)
+        self.__result = self.examine(expr)
     
     def result(self):
         return self.__result[0].solve()
 
     def calculate(self, expr):
+        if len(expr) == 1:
+            return expr
+        if len(expr) == 2:
+            return [NegativeExpression(expr[1])]
         if len(expr) == 3:
             if expr[1] == '+':
                 return [AddExpression(expr[0], expr[2])]
@@ -40,11 +45,7 @@ class Process:
     
     def examine(self, expr):
         if '(' not in expr:
-            if ")" not in expr:
-                return self.calculate(expr)
-            else:
-                raise Exception("You are missing a closing bracket")
-        
+            return self.calculate(expr)
         else:
             lpr = 0
             rpr = 0
@@ -59,4 +60,4 @@ class Process:
                         rpr = i
                         break
                     lpr_count -= 1
-            return examine(expr[:lpr] + examine(expr[lpr+1:rpr]) + expr[rpr+1:])
+            return self.examine(expr[:lpr] + self.examine(expr[lpr+1:rpr]) + expr[rpr+1:])

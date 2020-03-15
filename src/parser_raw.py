@@ -1,3 +1,4 @@
+from parser import Parser
 import re, collections
 
 expr = '2^2'    
