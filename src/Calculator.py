@@ -1,17 +1,40 @@
+from tkinter import *
+from  tkinter import ttk
 from Parser import Parser
 from Process import Process
 from gui import GUI
 import queue
 
 class Calculator(GUI):
+    '''
+    Class ini mengatur memegang akses keseluruh
+    komponen pembangun aplikasi
 
+    root : objek Tk()
+    self.__memory : Queue untuk menyimpan hasil perhitungan
+    self.__last_answer : Untuk menyimpan jawaban terakhir
+    '''
     def __init__ (self, root):
 
-        super().__init__(root)        
+        # Inisialisasi GUI
+        super().__init__(root)
+        
+        # Inisialisasi sistem
         self.__memory = queue.LifoQueue(maxsize=3)
         self.__last_answer = False
         
+        # Loop
         self.root.mainloop()
+    
+    def pushToForm(self, exp_form, newline=False):
+        # kegunaan : memasukan karakter satu per satu
+        self.form.configure(state='normal')
+        self.form.insert(END, exp_form)
+        self.display += str(exp_form)
+        self.form.configure(state ='disabled')
+        
+    def deleteForm(self):
+        return None
     
     def controller(self, getExpr, push=True):
         # kegunaan : memproses parsing dari Form GUI
@@ -24,7 +47,7 @@ class Calculator(GUI):
                 if ("^" in self.expression):
                     self.expression = self.expression.replace("^", "**")
                 if ("ans" in self.expression):
-                    self.expression = self.expression.replace("ans", str(self.ans))
+                    self.expression = self.expression.replace("ans", str(self.__last_answer))
                 print(self.expression)
                 result = eval(self.expression)
                 self.ans = result

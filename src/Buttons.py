@@ -52,4 +52,11 @@ class Buttons:
     def onClick(self, _text, push=True, _color = 'ivory'):
         print("Click")
         # kegunaan : event-handler button dan memasukannya ke Form satu per satu
-        return Button(self.root, text=_text, width=7, height = 2, bg = _color, command = lambda: self.controller(_text, push))
+        return Button (
+            self.root, 
+            text=_text, 
+            width=7, 
+            height = 2, 
+            bg = _color, 
+            command = lambda: self.controller(_text, push)
+        )
