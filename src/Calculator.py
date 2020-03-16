@@ -6,7 +6,14 @@ from gui import GUI
 import queue
 
 class Calculator(GUI):
+    '''
+    Class ini mengatur memegang akses keseluruh
+    komponen pembangun aplikasi
 
+    root : objek Tk()
+    self.__memory : Queue untuk menyimpan hasil perhitungan
+    self.__last_answer : Untuk menyimpan jawaban terakhir
+    '''
     def __init__ (self, root):
 
         # Inisialisasi GUI

@@ -14,8 +14,6 @@ from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 
 import re, collections
 
-
-
 expr = '(4/2^2)v3'    
 
 expr = re.findall('[\d.]+|[)(*-/+^v]', expr)

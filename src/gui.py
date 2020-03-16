@@ -3,6 +3,13 @@ from  tkinter import ttk
 from Buttons import Buttons
 
 class GUI:
+    '''
+    Class ini mengatur desain user interface
+    
+    self.root : objek Tk()
+    self.Buttons : objek Buttons()
+    ...
+    '''
     def __init__(self, root):
         # Konfigurasi awal
         self.root = root
