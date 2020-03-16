@@ -1,33 +1,34 @@
 from Button import CustomButton
 
 class Buttons:
-    def __init__(self):
+    def __init__(self, _command):
         # Push Grid Button
         self.list = []
+        self.command = _command        
         self.getButtonToForm()
     
     def getButtonToForm(self):    
         # kegunaan : membuat button kalkulator
-        self.list.append(CustomButton('MC', 'light pink'))
-        self.list.append(CustomButton('MR', 'light pink'))
-        self.list.append(CustomButton("CLEAR",'light coral'))
-        self.list.append(CustomButton('^', 'khaki'))
-        self.list.append(CustomButton(7))
-        self.list.append(CustomButton(8))
-        self.list.append(CustomButton(9))
-        self.list.append(CustomButton(u"\u221A", 'khaki'))
-        self.list.append(CustomButton(4))
-        self.list.append(CustomButton(5))
-        self.list.append(CustomButton(6))
-        self.list.append(CustomButton("/", 'khaki'))
-        self.list.append(CustomButton(1))
-        self.list.append(CustomButton(2))
-        self.list.append(CustomButton(3))
-        self.list.append(CustomButton('*', 'khaki'))
-        self.list.append(CustomButton(0))
-        self.list.append(CustomButton('.'))
-        self.list.append(CustomButton('+'))
-        self.list.append(CustomButton('-', 'khaki'))
+        self.list.append(CustomButton('MC', 'light pink', _command = self.command))
+        self.list.append(CustomButton('MR', 'light pink', _command = self.command))
+        self.list.append(CustomButton("CLEAR",'light coral', _command = self.command))
+        self.list.append(CustomButton('^', 'khaki', _command = self.command))
+        self.list.append(CustomButton(7, _command = self.command))
+        self.list.append(CustomButton(8, _command = self.command))
+        self.list.append(CustomButton(9, _command = self.command))
+        self.list.append(CustomButton(u"\u221A", 'khaki', _command = self.command))
+        self.list.append(CustomButton(4, _command = self.command))
+        self.list.append(CustomButton(5, _command = self.command))
+        self.list.append(CustomButton(6, _command = self.command))
+        self.list.append(CustomButton("/", 'khaki', _command = self.command))
+        self.list.append(CustomButton(1, _command = self.command))
+        self.list.append(CustomButton(2, _command = self.command))
+        self.list.append(CustomButton(3, _command = self.command))
+        self.list.append(CustomButton('*', 'khaki', _command = self.command))
+        self.list.append(CustomButton(0, _command = self.command))
+        self.list.append(CustomButton('.', _command = self.command))
+        self.list.append(CustomButton('+', _command = self.command))
+        self.list.append(CustomButton('-', 'khaki', _command = self.command))
         self.grid_up()
         self.grid_bottom()
 

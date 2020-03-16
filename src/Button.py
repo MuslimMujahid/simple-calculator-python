@@ -2,8 +2,8 @@ from tkinter import *
 from  tkinter import ttk
 
 class CustomButton(Button):
-    def __init__(self, _text, _color = 'ghostwhite'):
-        Button.__init__(self, text = _text, bg = _color, width = 8, height = 3, borderwidth = 1)
+    def __init__(self, _text, _color = 'ghostwhite', _command = None):
+        Button.__init__(self, text = _text, bg = _color, width = 8, height = 3, borderwidth = 1, command = lambda: _command(_text))
         #Button['font'] = myFont
     
     #def onClick(self, push = True):

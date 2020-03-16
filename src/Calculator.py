@@ -33,6 +33,7 @@ class Calculator(GUI):
             elif getExpr == "clear":
                 self.deleteForm()
             elif getExpr == "MC":
+                print("CEKkkkk")
                 self.history.append(self.ans)
             elif getExpr == "MR":
                 self.pushToForm(self.history.pop(), newline=True)

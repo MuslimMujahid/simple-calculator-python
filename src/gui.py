@@ -14,7 +14,7 @@ class GUI:
         
 
         # Push Grid Button
-        self.Buttons = Buttons()
+        self.Buttons = Buttons(_command = self.controller)
         
         # Form Ekspresi
         self.form = Text(root, state='disabled', width=30, height=4,background= "black", foreground="white")
