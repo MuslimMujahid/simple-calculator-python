@@ -3,6 +3,8 @@ from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.BinaryExpression.PowerExpression import PowerExpression
+from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 
 class Process:
@@ -26,7 +28,11 @@ class Process:
                 return [MulExpression(expr[0], expr[2])]
             if expr[1] == '/':
                 return [DivExpression(expr[0], expr[2])]
-        
+            if expr[1] == '^':
+                return [PowerExpression(expr[0], expr[2])]
+            if expr[1] == 'v':
+                return [SqrtExpression(expr[0], expr[2])]
+            
         if '^' in expr or 'v' in expr:
             for i in range(len(expr)):
                 if expr[i] == '^' or expr[i] == 'v':
