@@ -25,6 +25,7 @@ class Parser:
     '''
     def __init__(self, string):
         string = re.findall('[\d.]+|[)(*-/+^v]', string)
+        print(string)
         
         # Mengubah tiap operan menjadi TerminalExpression
         # dan jika diawali tanda '-'  menjadi NegativeExpression
@@ -32,7 +33,7 @@ class Parser:
             if string[0] == '-':
                 string = [NegativeExpression(TerminalExpression(string[1]))] + string[2:]     
             for i in range(len(string)):
-                if string[i].isnumeric():
+                if string[i].isnumeric() or '.' in string[i]:
                     string[i] = TerminalExpression(string[i])
             self.__expr = string                
 
