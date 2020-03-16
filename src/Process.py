@@ -9,7 +9,8 @@ from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 
 class Process:
     def __init__(self, expr):
-        self.__result = self.examine(expr)
+        self.__parser = Parser(expr)
+        self.__result = self.examine(self.__parser.expression())
     
     def result(self):
         return self.__result[0].solve()

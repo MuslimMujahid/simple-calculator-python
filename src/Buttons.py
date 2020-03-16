@@ -9,9 +9,9 @@ class Buttons:
     
     def getButtonToForm(self):    
         # kegunaan : membuat button kalkulator
-        self.list.append(CustomButton('MC', 'light pink', _command = self.command))
-        self.list.append(CustomButton('MR', 'light pink', _command = self.command))
-        self.list.append(CustomButton("CLEAR",'light coral', _command = self.command))
+        self.list.append(CustomButton('MC', 'light pink', _command = self.command, _push=None))
+        self.list.append(CustomButton('MR', 'light pink', _command = self.command, _push=None))
+        self.list.append(CustomButton("CLEAR",'light coral', _command = self.command, _push=None))
         self.list.append(CustomButton('^', 'khaki', _command = self.command))
         self.list.append(CustomButton(7, _command = self.command))
         self.list.append(CustomButton(8, _command = self.command))
@@ -34,10 +34,10 @@ class Buttons:
 
     def grid_bottom(self):
         # kegunaan : mengatur grid
-        equalButton = CustomButton('=','DarkSeaGreen2').grid(row=6,column=3)
-        powerButton = CustomButton('ANS').grid(row=6,column=0)
-        openButton = CustomButton(u"\u0028").grid(row=6,column=1)
-        closeButton = CustomButton(u"\u0029").grid(row=6,column=2)
+        equalButton = CustomButton('=','DarkSeaGreen2', _command = self.command, _push=None).grid(row=6,column=3)
+        powerButton = CustomButton('ANS', _command = self.command).grid(row=6,column=0)
+        openButton = CustomButton(u"\u0028", _command = self.command).grid(row=6,column=1)
+        closeButton = CustomButton(u"\u0029", _command = self.command).grid(row=6,column=2)
 
     def grid_up(self):
         # kegunaan : mengatur grid
@@ -48,15 +48,3 @@ class Buttons:
                 self.list[index].grid(row=i, column=j)
                 index=index+1
             i=i+1
-
-    def onClick(self, _text, push=True, _color = 'ivory'):
-        print("Click")
-        # kegunaan : event-handler button dan memasukannya ke Form satu per satu
-        return Button (
-            self.root, 
-            text=_text, 
-            width=7, 
-            height = 2, 
-            bg = _color, 
-            command = lambda: self.controller(_text, push)
-        )
