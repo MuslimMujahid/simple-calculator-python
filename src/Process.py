@@ -11,9 +11,13 @@ class Process:
     def __init__(self, expr):
         self.__parser = Parser(expr)
         self.__result = self.examine(self.__parser.expression())
+        self.__result = self.__result[0].solve()
+        
+        if self.__result.is_integer():
+            self.__result = int(self.__result)
     
     def result(self):
-        return self.__result[0].solve()
+        return self.__result
 
     def calculate(self, expr):
         if len(expr) == 1:
