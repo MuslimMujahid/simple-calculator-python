@@ -58,7 +58,12 @@ class Calculator(GUI):
                 if "ANS" in self.display:
                     self.display = self.display.replace("ANS", str(self.__last_answer.result()))
                 
-                self.__last_answer = Process(self.display)
+                try:
+                    self.__last_answer = Process(self.display)
+                except Exception as error:
+                    print(error)
+                    return
+                
                 self.deleteForm()
                 self.pushToForm(self.__last_answer.result(), newline=True)
                 

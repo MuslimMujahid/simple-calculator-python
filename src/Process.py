@@ -25,7 +25,7 @@ class Process:
         if len(expr) == 1:
 
             if not isinstance(expr[0], Expression):
-                raise Exception('Syntax error') 
+                raise Exception(f'Syntax error near {expr[0]}') 
             
             return expr
         if len(expr) == 2:
@@ -34,7 +34,7 @@ class Process:
                 not isinstance(expr[1], Expression) or
                 (expr[0] is not '-' and expr[0] is not 'v')
             ):
-                raise Exception('Syntax error near', expr[1])
+                raise Exception(f'Syntax error near {expr[1]}')
             
             if expr[0] == '-':
                 return [NegativeExpression(expr[1])]
@@ -52,7 +52,7 @@ class Process:
                     expr[1] is not '/'
                 )
             ):
-                 raise Exception('Syntax error near', expr[1])
+                 raise Exception(f'Syntax error near {expr[1]}')
             
             if expr[1] == '+':
                 return [AddExpression(expr[0], expr[2])]
