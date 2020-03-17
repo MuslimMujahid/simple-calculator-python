@@ -4,8 +4,8 @@ from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
 from Expression.BinaryExpression.PowerExpression import PowerExpression
-from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
+from Expression.UnaryExpression.SqrtExpression import SqrtExpression
 
 class Process:
     def __init__(self, expr):
@@ -19,7 +19,10 @@ class Process:
         if len(expr) == 1:
             return expr
         if len(expr) == 2:
-            return [NegativeExpression(expr[1])]
+            if expr[0] == '-':
+                return [NegativeExpression(expr[1])]
+            if expr[0] == 'v':
+                return [SqrtExpression(expr[1])]
         if len(expr) == 3:
             if expr[1] == '+':
                 return [AddExpression(expr[0], expr[2])]
@@ -31,12 +34,15 @@ class Process:
                 return [DivExpression(expr[0], expr[2])]
             if expr[1] == '^':
                 return [PowerExpression(expr[0], expr[2])]
-            if expr[1] == 'v':
-                return [SqrtExpression(expr[0], expr[2])]
-            
-        if '^' in expr or 'v' in expr:
+        
+        if 'v' in expr:
             for i in range(len(expr)):
-                if expr[i] == '^' or expr[i] == 'v':
+                if expr[i] == 'v':
+                    return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
+            
+        if '^' in expr:
+            for i in range(len(expr)):
+                if expr[i] == '^':
                     return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
         
         if '/' in expr or '*' in expr:

@@ -46,8 +46,8 @@ class Calculator(GUI):
             self.pushToForm(getExpr)
         else:   
             if (getExpr == '='): 
-                # if (u"\u221A" in self.expression):
-                #     self.expression = self.parseExpAkar(self.expression)
+                if (u"\u221A" in self.display):
+                    self.display = self.display.replace(u'\u221A', 'v')
                 # if ("^" in self.expression):
                 #     self.expression = self.expression.replace("^", "**")
                 # if ("ans" in self.expression):

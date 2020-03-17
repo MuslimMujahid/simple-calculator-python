@@ -1,11 +1,5 @@
 from Expression.UnaryExpression.TerminalExpression import TerminalExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
-from Expression.BinaryExpression.AddExpression import AddExpression
-from Expression.BinaryExpression.SubExpression import SubExpression
-from Expression.BinaryExpression.MulExpression import MulExpression
-from Expression.BinaryExpression.DivExpression import DivExpression
-from Expression.BinaryExpression.PowerExpression import PowerExpression
-from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 import re, collections
 
 class Parser:
