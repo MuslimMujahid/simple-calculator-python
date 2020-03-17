@@ -1,4 +1,5 @@
 from Parser import Parser
+from Expression.BaseExpression.Expression import Expression
 from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
@@ -23,14 +24,14 @@ class Process:
     def calculate(self, expr):
         if len(expr) == 1:
 
-            if not isinstance(expr[0], TerminalExpression):
+            if not isinstance(expr[0], Expression):
                 raise Exception('Syntax error') 
             
             return expr
         if len(expr) == 2:
             
             if (
-                not isinstance(expr[1], TerminalExpression) or
+                not isinstance(expr[1], Expression) or
                 (expr[0] is not '-' and expr[0] is not 'v')
             ):
                 raise Exception('Syntax error near', expr[1])
@@ -42,8 +43,8 @@ class Process:
         if len(expr) == 3:
             
             if (
-                not isinstance(expr[0], TerminalExpression) or
-                not isinstance(expr[2], TerminalExpression) or
+                not isinstance(expr[0], Expression) or
+                not isinstance(expr[2], Expression) or
                 (
                     expr[1] is not '+' and 
                     expr[1] is not '-' and
