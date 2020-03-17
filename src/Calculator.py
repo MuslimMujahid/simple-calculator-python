@@ -57,7 +57,7 @@ class Calculator(GUI):
                     self.display = self.display.replace(u'\u221A', 'v')
                 if "ANS" in self.display:
                     self.display = self.display.replace("ANS", str(self.__last_answer.result()))
-            
+                
                 self.__last_answer = Process(self.display)
                 self.deleteForm()
                 self.pushToForm(self.__last_answer.result(), newline=True)

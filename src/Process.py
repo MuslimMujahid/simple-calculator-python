@@ -4,6 +4,7 @@ from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
 from Expression.BinaryExpression.PowerExpression import PowerExpression
+from Expression.UnaryExpression.TerminalExpression import TerminalExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 from Expression.UnaryExpression.SqrtExpression import SqrtExpression
 
@@ -21,13 +22,37 @@ class Process:
 
     def calculate(self, expr):
         if len(expr) == 1:
+
+            if not isinstance(expr[0], TerminalExpression):
+                raise Exception('Syntax error') 
+            
             return expr
         if len(expr) == 2:
+            
+            if (
+                not isinstance(expr[1], TerminalExpression) or
+                (expr[0] is not '-' and expr[0] is not 'v')
+            ):
+                raise Exception('Syntax error near', expr[1])
+            
             if expr[0] == '-':
                 return [NegativeExpression(expr[1])]
             if expr[0] == 'v':
                 return [SqrtExpression(expr[1])]
         if len(expr) == 3:
+            
+            if (
+                not isinstance(expr[0], TerminalExpression) or
+                not isinstance(expr[2], TerminalExpression) or
+                (
+                    expr[1] is not '+' and 
+                    expr[1] is not '-' and
+                    expr[1] is not '*' and
+                    expr[1] is not '/'
+                )
+            ):
+                 raise Exception('Syntax error near', expr[1])
+            
             if expr[1] == '+':
                 return [AddExpression(expr[0], expr[2])]
             if expr[1] == '-':
@@ -68,6 +93,8 @@ class Process:
             rpr = 0
             lpr_count = 0
             for i in range(len(expr)):
+                
+                # Cari pasang bracket
                 if expr[i] == '(':
                     if lpr_count == 0:
                         lpr = i
@@ -77,4 +104,11 @@ class Process:
                         rpr = i
                         break
                     lpr_count -= 1
+                    
+                # Kalau loop nya sampai akhir berarti ada bracket yang kurang
+                if i == len(expr)-1:
+                    raise Exception('You miss a bracket.')
+            
+            # Lakukan examine tersendiri untuk bagian bracket
+            # kemudian examine ulang keseluruhan
             return self.examine(expr[:lpr] + self.examine(expr[lpr+1:rpr]) + expr[rpr+1:])
