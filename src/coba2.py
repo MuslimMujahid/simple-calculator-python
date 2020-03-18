@@ -126,5 +126,5 @@ def examine(expr):
 
         return examine(expr[:lpr] + examine(expr[lpr+1:rpr]) + expr[rpr+1:])
 
-a = calc(re.findall('[\d.]+|[)(*-/+^v]',"5+2*3"))
+a = re.findall('[\d.]+|[)(*-/+^v]',"5.233333+2*3")
 print(a)

@@ -1,11 +1,5 @@
 from Expression.UnaryExpression.TerminalExpression import TerminalExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
-from Expression.BinaryExpression.AddExpression import AddExpression
-from Expression.BinaryExpression.SubExpression import SubExpression
-from Expression.BinaryExpression.MulExpression import MulExpression
-from Expression.BinaryExpression.DivExpression import DivExpression
-from Expression.BinaryExpression.PowerExpression import PowerExpression
-from Expression.BinaryExpression.SqrtExpression import SqrtExpression
 import re, collections
 
 class Parser:
@@ -24,7 +18,7 @@ class Parser:
                   telah dipisahkan dari string 
     '''
     def __init__(self, string):
-        string = re.findall('[\d.]+|[)(*-/+^v]', string)
+        string = re.findall('[\d.]+|[)(*-/+^v%]', string)
         
         # Mengubah tiap operan menjadi TerminalExpression
         # dan jika diawali tanda '-'  menjadi NegativeExpression
@@ -32,7 +26,7 @@ class Parser:
             if string[0] == '-':
                 string = [NegativeExpression(TerminalExpression(string[1]))] + string[2:]     
             for i in range(len(string)):
-                if string[i].isnumeric():
+                if string[i].isnumeric() or '.' in string[i]:
                     string[i] = TerminalExpression(string[i])
             self.__expr = string                
 

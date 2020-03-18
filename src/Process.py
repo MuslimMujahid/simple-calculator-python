@@ -1,23 +1,59 @@
 from Parser import Parser
+from Expression.BaseExpression.Expression import Expression
 from Expression.BinaryExpression.AddExpression import AddExpression
 from Expression.BinaryExpression.SubExpression import SubExpression
 from Expression.BinaryExpression.MulExpression import MulExpression
 from Expression.BinaryExpression.DivExpression import DivExpression
+from Expression.BinaryExpression.PowerExpression import PowerExpression
+from Expression.UnaryExpression.TerminalExpression import TerminalExpression
 from Expression.UnaryExpression.NegativeExpression import NegativeExpression
+from Expression.UnaryExpression.SqrtExpression import SqrtExpression
 
 class Process:
     def __init__(self, expr):
-        self.__result = self.examine(expr)
+        self.__parser = Parser(expr)
+        self.__result = self.examine(self.__parser.expression())
+        self.__result = self.__result[0].solve()
+        
+        if self.__result.is_integer():
+            self.__result = int(self.__result)
     
     def result(self):
-        return self.__result[0].solve()
+        return self.__result
 
     def calculate(self, expr):
         if len(expr) == 1:
+
+            if not isinstance(expr[0], Expression):
+                raise Exception(f'Syntax error near {expr[0]}') 
+            
             return expr
         if len(expr) == 2:
-            return [NegativeExpression(expr[1])]
+            
+            if (
+                not isinstance(expr[1], Expression) or
+                (expr[0] is not '-' and expr[0] is not 'v')
+            ):
+                raise Exception(f'Syntax error near {expr[1]}')
+            
+            if expr[0] == '-':
+                return [NegativeExpression(expr[1])]
+            if expr[0] == 'v':
+                return [SqrtExpression(expr[1])]
         if len(expr) == 3:
+            
+            if (
+                not isinstance(expr[0], Expression) or
+                not isinstance(expr[2], Expression) or
+                (
+                    expr[1] is not '+' and 
+                    expr[1] is not '-' and
+                    expr[1] is not '*' and
+                    expr[1] is not '/'
+                )
+            ):
+                 raise Exception(f'Syntax error near {expr[1]}')
+            
             if expr[1] == '+':
                 return [AddExpression(expr[0], expr[2])]
             if expr[1] == '-':
@@ -26,10 +62,17 @@ class Process:
                 return [MulExpression(expr[0], expr[2])]
             if expr[1] == '/':
                 return [DivExpression(expr[0], expr[2])]
+            if expr[1] == '^':
+                return [PowerExpression(expr[0], expr[2])]
         
-        if '^' in expr or 'v' in expr:
+        if 'v' in expr:
             for i in range(len(expr)):
-                if expr[i] == '^' or expr[i] == 'v':
+                if expr[i] == 'v':
+                    return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
+            
+        if '^' in expr:
+            for i in range(len(expr)):
+                if expr[i] == '^':
                     return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
         
         if '/' in expr or '*' in expr:
@@ -51,6 +94,8 @@ class Process:
             rpr = 0
             lpr_count = 0
             for i in range(len(expr)):
+                
+                # Cari pasang bracket
                 if expr[i] == '(':
                     if lpr_count == 0:
                         lpr = i
@@ -60,4 +105,11 @@ class Process:
                         rpr = i
                         break
                     lpr_count -= 1
+                    
+                # Kalau loop nya sampai akhir berarti ada bracket yang kurang
+                if i == len(expr)-1:
+                    raise Exception('You miss a bracket.')
+            
+            # Lakukan examine tersendiri untuk bagian bracket
+            # kemudian examine ulang keseluruhan
             return self.examine(expr[:lpr] + self.examine(expr[lpr+1:rpr]) + expr[rpr+1:])

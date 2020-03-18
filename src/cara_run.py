@@ -1,5 +1,9 @@
 from Parser import Parser
 from Process import Process
+import queue
+import re, collections
 
-print(Process(Parser("25v5").expression()).result())
-# print(Process(Parser("3*5+(10^2)").expression()).result())
+# print(Process("v9").result())
+text = "2u+2*s(5+10)"
+text = re.sub('[\d.]+|[)(*-/+^v]', '', text)
+print(len(text)) 

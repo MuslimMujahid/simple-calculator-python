@@ -22,41 +22,81 @@ class Calculator(GUI):
         # Inisialisasi sistem
         self.__memory = queue.LifoQueue(maxsize=3)
         self.__last_answer = False
+        self.__last_input = '' # Menyimpan push terakhir ke form
+        self.__last_command = '' # Menympan command terakhir
         
         # Loop
         self.root.mainloop()
     
     def pushToForm(self, exp_form, newline=False):
-        # kegunaan : memasukan karakter satu per satu
+        # Menampilkan exp_form ke layar
         self.form.configure(state='normal')
         self.form.insert(END, exp_form)
         self.display += str(exp_form)
         self.form.configure(state ='disabled')
         
     def deleteForm(self):
-        return None
+        # Membersihkan layar
+        self.display = ''
+        self.form.configure(state='normal')
+        self.form.delete('1.0', END)
     
     def controller(self, getExpr, push=True):
-        # kegunaan : memproses parsing dari Form GUI
+        # Controller tombol kalkulator
         if (push != None):
+            print(getExpr)
             self.pushToForm(getExpr)
+            self.__last_input = getExpr        
+        
         else:   
             if (getExpr == '='): 
-                if (u"\u221A" in self.expression):
-                    self.expression = self.parseExpAkar(self.expression)
-                if ("^" in self.expression):
-                    self.expression = self.expression.replace("^", "**")
-                if ("ans" in self.expression):
-                    self.expression = self.expression.replace("ans", str(self.__last_answer))
-                print(self.expression)
-                result = eval(self.expression)
-                self.ans = result
+            
+                # Gantikan karakter akar dengan 'v'
+                # gantikan ANS dengan jawaban terakhir
+                if u"\u221A" in self.display:
+                    self.display = self.display.replace(u'\u221A', 'v')
+                if "ANS" in self.display:
+                    self.display = self.display.replace("ANS", str(self.__last_answer.result()))
+                
+                try:
+                    self.__last_answer = Process(self.display)
+                except Exception as error:
+                    print(error)
+                    return
+                
                 self.deleteForm()
-                self.pushToForm(result, newline=True)
-            elif getExpr == "clear":
+                self.pushToForm(self.__last_answer.result(), newline=True)
+                
+                self.__last_input = str(self.__last_answer.result())
+            
+            elif getExpr == "CLEAR":
+                
+                # Bersihkan layar
                 self.deleteForm()
+            
             elif getExpr == "MC":
-                print("CEKkkkk")
-                self.history.append(self.ans)
+            
+                # Simpan ke memory
+                self.__memory.put(self.__last_answer.result())                
+            
             elif getExpr == "MR":
-                self.pushToForm(self.history.pop(), newline=True)
+
+                # Hanya memproses jika queue tidak kosong
+                if self.__memory.empty():
+                    return
+                
+                # Jika command terakhir adalah MR maka hapus 
+                # hasil dari MR sebelumnya dan tampilkan
+                # hasil MR yang baru
+                if self.__last_command is 'MR':
+                    new_display = self.display[:len(self.display)-len(self.__last_input)]
+                    self.deleteForm()
+                    self.pushToForm(new_display, newline=True)
+                
+                self.__last_input = str(self.__memory.get())
+                self.pushToForm(self.__last_input)
+        
+        # Simpan command terakhir
+        self.__last_command = getExpr
+        
+                

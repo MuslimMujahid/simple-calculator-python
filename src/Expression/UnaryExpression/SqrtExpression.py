@@ -1,11 +1,11 @@
 from .UnaryExpression import UnaryExpression
+import math
 
-class NegativeExpression(UnaryExpression):
-    '''
+class SqrtExpression(UnaryExpression):
+    ''' 
     value : TerminalExpression
     '''
     def __init__(self, value):
-        self.value = value.value()
+        super().__init__(value.solve())
     def solve(self):
-        return -self.value
-
+        return math.sqrt(self.value)
