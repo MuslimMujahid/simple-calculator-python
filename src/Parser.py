@@ -18,7 +18,7 @@ class Parser:
                   telah dipisahkan dari string 
     '''
     def __init__(self, string):
-        string = re.findall('[\d.]+|[)(*-/+^v]', string)
+        string = re.findall('[\d.]+|[)(*-/+^v%]', string)
         
         # Mengubah tiap operan menjadi TerminalExpression
         # dan jika diawali tanda '-'  menjadi NegativeExpression

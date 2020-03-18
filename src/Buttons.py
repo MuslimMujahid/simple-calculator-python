@@ -9,42 +9,32 @@ class Buttons:
     
     def getButtonToForm(self):    
         # kegunaan : membuat button kalkulator
-        self.list.append(CustomButton('MC', 'light pink', _command = self.command, _push=None))
-        self.list.append(CustomButton('MR', 'light pink', _command = self.command, _push=None))
-        self.list.append(CustomButton("CLEAR",'light coral', _command = self.command, _push=None))
-        self.list.append(CustomButton('^', 'khaki', _command = self.command))
-        self.list.append(CustomButton(7, _command = self.command))
-        self.list.append(CustomButton(8, _command = self.command))
-        self.list.append(CustomButton(9, _command = self.command))
-        self.list.append(CustomButton(u"\u221A", 'khaki', _command = self.command))
-        self.list.append(CustomButton(4, _command = self.command))
-        self.list.append(CustomButton(5, _command = self.command))
-        self.list.append(CustomButton(6, _command = self.command))
-        self.list.append(CustomButton("/", 'khaki', _command = self.command))
-        self.list.append(CustomButton(1, _command = self.command))
-        self.list.append(CustomButton(2, _command = self.command))
-        self.list.append(CustomButton(3, _command = self.command))
-        self.list.append(CustomButton('*', 'khaki', _command = self.command))
-        self.list.append(CustomButton(0, _command = self.command))
-        self.list.append(CustomButton('.', _command = self.command))
-        self.list.append(CustomButton('+', _command = self.command))
-        self.list.append(CustomButton('-', 'khaki', _command = self.command))
-        self.grid_up()
-        self.grid_bottom()
+        CustomButton("CLEAR", _color = '#ffb7a8' , _command = self.command, _push=None).grid(column = 0, row = 1)
+        CustomButton('MC', _color = '#f5e0e7', _command = self.command, _push=None).grid(column = 1, row = 1)
+        CustomButton('MR', _color = '#f5e0e7', _command = self.command, _push=None).grid(column = 2, row = 1)
+        CustomButton('^', _color = '#fff5bd', _command = self.command).grid(column = 3, row = 1)
 
-    def grid_bottom(self):
-        # kegunaan : mengatur grid
-        equalButton = CustomButton('=','DarkSeaGreen2', _command = self.command, _push=None).grid(row=6,column=3)
-        powerButton = CustomButton('ANS', _command = self.command).grid(row=6,column=0)
-        openButton = CustomButton(u"\u0028", _command = self.command).grid(row=6,column=1)
-        closeButton = CustomButton(u"\u0029", _command = self.command).grid(row=6,column=2)
+        CustomButton(7, _command = self.command).grid(column = 0, row = 2)
+        CustomButton(8, _command = self.command).grid(column = 1, row = 2)
+        CustomButton(9, _command = self.command).grid(column = 2, row = 2)
+        CustomButton(u"\u221A", _color = '#fff5bd', _command = self.command).grid(column = 3, row = 2)
 
-    def grid_up(self):
-        # kegunaan : mengatur grid
-        index=0
-        i=1
-        while (i<6):
-            for j in range(4):
-                self.list[index].grid(row=i, column=j)
-                index=index+1
-            i=i+1
+        CustomButton(4, _command = self.command).grid(column = 0, row = 3)
+        CustomButton(5, _command = self.command).grid(column = 1, row = 3)
+        CustomButton(6, _command = self.command).grid(column = 2, row = 3)
+        CustomButton("/", _color = '#fff5bd', _command = self.command).grid(column = 3, row = 3)
+
+        CustomButton(1, _command = self.command).grid(column = 0, row = 4)
+        CustomButton(2, _command = self.command).grid(column = 1, row = 4)
+        CustomButton(3, _command = self.command).grid(column = 2, row = 4)
+        CustomButton('*', _color = '#fff5bd', _command = self.command).grid(column = 3, row = 4)
+        
+        CustomButton(0, _command = self.command).grid(column = 0, row = 5)
+        CustomButton('.', _command = self.command).grid(column = 1, row = 5)
+        CustomButton('ANS',  _color = '#a8ffc8', _command = self.command).grid(column = 2, row = 5 )
+        CustomButton('+', _color = '#fff5bd', _command = self.command).grid(column = 3, row = 5)
+        
+        CustomButton('(',  _command = self.command).grid(column = 0, row = 6)
+        CustomButton(')',  _command = self.command).grid(column = 1, row = 6)
+        CustomButton('-', _color = '#fff5bd', _command = self.command).grid(column = 3, row = 6)
+        CustomButton('=', _color = '#a8ffc8', _command = self.command, _push = None).grid(column = 2, row = 6)
