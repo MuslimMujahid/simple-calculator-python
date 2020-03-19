@@ -9,8 +9,11 @@ class CustomButton(Button):
             height = 3, 
             width = _width,
             borderwidth = 1,
-            command = lambda: _command(_text, _push)
+            command = self.onClick(_command, _text, _push)
         )
+
+    def onClick (self, _command, _text, _push):
+        return (lambda: _command(_text, _push))
 
 
         
