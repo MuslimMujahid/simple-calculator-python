@@ -3,10 +3,10 @@ from tkinter import ttk
 from tkinter import messagebox
 from Parser import Parser
 from Process import Process
-from gui import GUI
+from App import App
 import queue
 
-class Calculator(GUI):
+class Calculator(App):
     '''
     Class ini mengatur memegang akses keseluruh
     komponen pembangun aplikasi

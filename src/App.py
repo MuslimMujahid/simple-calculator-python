@@ -2,7 +2,7 @@ from tkinter import *
 from  tkinter import ttk
 from Buttons import Buttons
 
-class GUI:
+class App:
     '''
     Class ini mengatur desain user interface
     
