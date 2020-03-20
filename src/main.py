@@ -2,7 +2,7 @@ from Calculator import Calculator
 from tkinter import *
 
 def main():
-    calc = Calculator(Tk())
+    calc = Calculator()
 
 if __name__ == '__main__':
     main()

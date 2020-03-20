@@ -15,10 +15,28 @@ class Calculator(App):
     self.__memory : Queue untuk menyimpan hasil perhitungan
     self.__last_answer : Untuk menyimpan jawaban terakhir
     '''
-    def __init__ (self, root):
+    def __init__ (self):
 
         # Inisialisasi GUI
-        super().__init__(root)
+        super().__init__()
+        self.root.configure(background = '#9e9e9e')
+        self.root.title("Calculator")
+        # self.root.iconbitmap('icon.ico')
+        
+        # Form Ekspresi
+        self.form = Text(
+            self.root, 
+            state='disabled', 
+            width=28, 
+            height=4,
+            background= "ghostwhite", 
+            foreground="black"
+        )
+        self.form.grid(row=0, column=0, columnspan=4, padx=2, pady=20)
+        self.form.configure(state='normal')
+        
+        # Teks pada screen
+        self.display = ''
         
         # Inisialisasi sistem
         self.__memory = queue.LifoQueue(maxsize=3)

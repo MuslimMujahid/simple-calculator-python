@@ -10,23 +10,12 @@ class App:
     self.Buttons : objek Buttons()
     ...
     '''
-    def __init__(self, root):
+    def __init__(self):
         # Konfigurasi awal
-        self.root = root
-        root.configure(background = '#9e9e9e')
-        root.title("Calculator")
-        root.iconbitmap('icon.ico')
+        self.root = Tk()
 
         # Buat button
         self.Buttons = Buttons(_command = self.controller)
-        
-        # Form Ekspresi
-        self.form = Text(root, state='disabled', width=28, height=4,background= "ghostwhite", foreground="black")
-        self.form.grid(row=0, column=0, columnspan=4, padx=2, pady=20)
-        self.form.configure(state='normal')
-        
-        # Teks pada screen
-        self.display = ''
    
     def pushToForm(self, exp_form, newline=False):
         pass
