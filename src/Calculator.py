@@ -5,6 +5,7 @@ from Parser import Parser
 from Process import Process
 from App import App
 import queue
+import tkinter.font as font
 
 class Calculator(App):
     '''
@@ -21,6 +22,7 @@ class Calculator(App):
         super().__init__()
         self.root.configure(background = '#9e9e9e')
         self.root.title("Calculator")
+        myFont = font.Font(family='Helvetica', size = 11, weight = 'bold')
         # self.root.iconbitmap('icon.ico')
         
         # Form Ekspresi
@@ -30,7 +32,8 @@ class Calculator(App):
             width=28, 
             height=4,
             background= "ghostwhite", 
-            foreground="black"
+            foreground="black",
+            font = myFont
         )
         self.form.grid(row=0, column=0, columnspan=4, padx=2, pady=20)
         self.form.configure(state='normal')
@@ -95,6 +98,9 @@ class Calculator(App):
                 
                 # Bersihkan layar
                 self.deleteForm()
+                #hapus seluruh memori
+                while (not (self.__memory.empty())):
+                    self.__memory.get()
             
             elif getExpr == "MC":
                 if(self.__memory.__sizeof__ == 3):
@@ -103,6 +109,7 @@ class Calculator(App):
                     # Simpan ke memory
                     try:
                         self.__memory.put(self.__last_answer.result())
+                        self.deleteForm()
                     except AttributeError as attr:
                         print("Anda Belum Memasukan Last Answer!")
                         messagebox.showinfo("Memory Error", "Anda belum memasukan angka untuk disimpan dalam memori!")
