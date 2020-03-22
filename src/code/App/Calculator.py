@@ -52,7 +52,6 @@ class Calculator(App):
     def initRoot(self):
         self.root.configure(background = '#9e9e9e')
         self.root.title("Calculator")
-        self.root.maxsize(255,495)
     
     def initForm(self):
         self.form = Text(
@@ -82,10 +81,14 @@ class Calculator(App):
     
     def controller(self, getExpr, push=True):
         # Controller tombol kalkulator
-        if (push != None):
+        if push is not None:
+            
+            if getExpr is 'cos' or getExpr is 'sin' or getExpr is 'tan':
+                getExpr += '('
+            
             self.pushToForm(getExpr)
             self.__last_input = getExpr        
-        
+
         else:   
             if (getExpr == '='): 
             
