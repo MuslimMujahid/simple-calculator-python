@@ -52,6 +52,7 @@ class Calculator(App):
     def initRoot(self):
         self.root.configure(background = '#9e9e9e')
         self.root.title("Calculator")
+        self.root.maxsize(255,495)
     
     def initForm(self):
         self.form = Text(
