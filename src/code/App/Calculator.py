@@ -120,7 +120,7 @@ class Calculator(App):
                 self.__memory = queue.LifoQueue(maxsize=3)
             
             elif getExpr == "MC":
-                if (self.__memory.__sizeof__ == 3):
+                if self.__memory.full():
                     messagebox.showinfo("Memory Error", "Anda tidak bisa melakukan penyimpanan lebih dari 3 kali")
                 else:
                     try:
