@@ -6,6 +6,12 @@ class TerminalExpression(UnaryExpression):
     
     def __init__(self, value):
         super().__init__(value)
+    
+    def __eq__(self, other):
+        if not isinstance(other, TerminalExpression):
+            return NotImplemented
+        
+        return self.solve() == other.solve()
         
     def solve(self):
         return self.value

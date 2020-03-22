@@ -8,5 +8,11 @@ class SqrtExpression(UnaryExpression):
     def __init__(self, value):
         super().__init__(value.solve())
     
+    def __eq__(self, other):
+        if not isinstance(other, SqrtExpression):
+            return NotImplemented
+        
+        return self.solve() == other.solve()
+    
     def solve(self):
         return math.sqrt(self.value)
