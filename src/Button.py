@@ -3,6 +3,7 @@ from  tkinter import ttk
 import tkinter.font as font
 
 class CustomButton(Button):
+    
     def __init__(self, _text, _width = 8, _color = '#fbf8ea', _activecolor = '#f0eddf' , _command = None, _push=True):
         myFont = font.Font(family='Helvetica', size = 9, weight = 'bold')
         Button.__init__(

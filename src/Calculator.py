@@ -8,24 +8,52 @@ import queue
 import tkinter.font as font
 
 class Calculator(App):
+    
     '''
-    Class ini mengatur memegang akses keseluruh
+    
+    Class ini memegang akses keseluruh
     komponen pembangun aplikasi
 
-    root : objek Tk()
-    self.__memory : Queue untuk menyimpan hasil perhitungan
-    self.__last_answer : Untuk menyimpan jawaban terakhir
+    Type
+    self.__memory : queue
+    self.__last_answer : float
+    self.__display : string
+    self.__last_input : string
+    self.__last_command : string
+    
+    Fungsi
+    self.__memory : menyimpan hasil perhitungan dalam bentuk antrian
+    self.__last_answer : menyimpan jawaban terakhir
+    self.__display : menyimpan expresi  
+    self.__last_input : menyimpan push terakhir yang dilakukan ke form
+    self.__last_command : menyimpan command terakhir yang digunakan user
+    
     '''
+    
     def __init__ (self):
 
         # Inisialisasi GUI
         super().__init__()
+        self.initRoot()
+        self.initForm()        
+        # self.root.iconbitmap('icon.ico')
+                        
+        # Inisialisasi sistem
+        self.display = ''
+        self.__memory = queue.LifoQueue(maxsize=3)
+        self.__last_answer = False
+        self.__last_input = ''
+        self.__last_command = ''
+        
+        # Loop
+        self.root.mainloop()
+        
+    
+    def initRoot(self):
         self.root.configure(background = '#9e9e9e')
         self.root.title("Calculator")
-        myFont = font.Font(family='Helvetica', size = 11, weight = 'bold')
-        # self.root.iconbitmap('icon.ico')
-        
-        # Form Ekspresi
+    
+    def initForm(self):
         self.form = Text(
             self.root, 
             state='disabled', 
@@ -33,22 +61,10 @@ class Calculator(App):
             height=4,
             background= "ghostwhite", 
             foreground="black",
-            font = myFont
+            font = font.Font(family='Helvetica', size = 11, weight = 'bold')
         )
         self.form.grid(row=0, column=0, columnspan=4, padx=2, pady=20)
         self.form.configure(state='normal')
-        
-        # Teks pada screen
-        self.display = ''
-        
-        # Inisialisasi sistem
-        self.__memory = queue.LifoQueue(maxsize=3)
-        self.__last_answer = False
-        self.__last_input = '' # Menyimpan push terakhir ke form
-        self.__last_command = '' # Menympan command terakhir
-        
-        # Loop
-        self.root.mainloop()
     
     def pushToForm(self, exp_form, newline=False):
         # Menampilkan exp_form ke layar
@@ -66,7 +82,6 @@ class Calculator(App):
     def controller(self, getExpr, push=True):
         # Controller tombol kalkulator
         if (push != None):
-            print(getExpr)
             self.pushToForm(getExpr)
             self.__last_input = getExpr        
         
@@ -91,28 +106,24 @@ class Calculator(App):
                 
                 self.deleteForm()
                 self.pushToForm(self.__last_answer.result(), newline=True)
-                
                 self.__last_input = str(self.__last_answer.result())
             
             elif getExpr == "CLEAR":
-                
-                # Bersihkan layar
+                # Bersihkan layar dan hapus isi memori
                 self.deleteForm()
-                #hapus seluruh memori
-                while (not (self.__memory.empty())):
-                    self.__memory.get()
+                self.__memory = queue.LifoQueue(maxsize=3)
             
             elif getExpr == "MC":
-                if(self.__memory.__sizeof__ == 3):
+                if (self.__memory.__sizeof__ == 3):
                     messagebox.showinfo("Memory Error", "Anda tidak bisa melakukan penyimpanan lebih dari 3 kali")
                 else:
-                    # Simpan ke memory
                     try:
+                        # Simpan ke memory
                         self.__memory.put(self.__last_answer.result())
                         self.deleteForm()
                     except AttributeError as attr:
-                        print("Anda Belum Memasukan Last Answer!")
                         messagebox.showinfo("Memory Error", "Anda belum memasukan angka untuk disimpan dalam memori!")
+  
             elif getExpr == "MR":
 
                 # Hanya memproses jika queue tidak kosong

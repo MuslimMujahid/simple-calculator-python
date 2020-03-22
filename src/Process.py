@@ -66,24 +66,20 @@ class Process:
                 return [PowerExpression(expr[0], expr[2])]
         
         if 'v' in expr:
-            for i in range(len(expr)):
-                if expr[i] == 'v':
-                    return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
+            i = expr.index('v')
+            return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
             
         if '^' in expr:
-            for i in range(len(expr)):
-                if expr[i] == '^':
-                    return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
+            i = expr.index('^')
+            return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
         
         if '/' in expr or '*' in expr:
-            for i in range(len(expr)):
-                if expr[i] == '*' or expr[i] == '/':
-                    return  self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
+            i = expr.index('/' if '/' in expr else '*')
+            return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
         
         else:
-            for i in range(len(expr)):
-                if expr[i] == '+' or expr[i] == '-':
-                    return self.calculate(self.calculate(expr[:i+2]) + expr[i+2:])
+            i = expr.index('+' if '+' in expr else '-')
+            return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
 
     
     def examine(self, expr):
