@@ -7,6 +7,9 @@ class NegativeExpression(UnaryExpression):
     def __init__(self, value):
         super().__init__(value.solve())
     
+    def __str__(self):
+        return self.solve() 
+    
     def __eq__(self, other):
         if not isinstance(other, NegativeExpression):
             return NotImplemented

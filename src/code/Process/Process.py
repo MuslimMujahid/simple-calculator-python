@@ -5,9 +5,13 @@ from ..Expression.BinaryExpression import SubExpression
 from ..Expression.BinaryExpression import MulExpression
 from ..Expression.BinaryExpression import DivExpression
 from ..Expression.BinaryExpression import PowerExpression
+from ..Expression.BinaryExpression import ModExpression
 from ..Expression.UnaryExpression import TerminalExpression
 from ..Expression.UnaryExpression import NegativeExpression
 from ..Expression.UnaryExpression import SqrtExpression
+from ..Expression.UnaryExpression import CosExpression
+from ..Expression.UnaryExpression import SinExpression
+from ..Expression.UnaryExpression import TanExpression
 
 class Process:
     
@@ -34,6 +38,7 @@ class Process:
         return self.__result
 
     def calculate(self, expr):
+        print(expr)
         if len(expr) == 1:
 
             if not isinstance(expr[0], Expression):
@@ -42,10 +47,9 @@ class Process:
             return expr
         
         if len(expr) == 2:
-            
             if (
                 not isinstance(expr[1], Expression) or
-                (expr[0] is not '-' and expr[0] is not 'v')
+                expr[0] not in '-vcosintan'
             ):
                 raise Exception(f'Syntax error near {expr[1]}')
             
@@ -53,19 +57,19 @@ class Process:
                 return [NegativeExpression(expr[1])]
             if expr[0] == 'v':
                 return [SqrtExpression(expr[1])]
+            if expr[0] == 'cos':
+                return [CosExpression(expr[1])]
+            if expr[0] == 'sin':
+                return [SinExpression(expr[1])]
+            if expr[0] == 'tan':
+                return [TanExpression(expr[1])]
             
         if len(expr) == 3:
             
             if (
                 not isinstance(expr[0], Expression) or
                 not isinstance(expr[2], Expression) or
-                (
-                    expr[1] is not '+' and 
-                    expr[1] is not '-' and
-                    expr[1] is not '*' and
-                    expr[1] is not '/' and
-                    expr[1] is not '^'
-                )
+                expr[1] not in '+-*/^%' 
             ):
                  raise Exception(f'Syntax error near {expr[1]}')
             
@@ -79,6 +83,9 @@ class Process:
                 return [DivExpression(expr[0], expr[2])]
             if expr[1] == '^':
                 return [PowerExpression(expr[0], expr[2])]
+            if expr[1] == '%':
+                return [ModExpression(expr[0], expr[2])]
+            
         
         if 'v' in expr:
             i = expr.index('v')

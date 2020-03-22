@@ -80,6 +80,7 @@ class Calculator(App):
         self.form.delete('1.0', END)
     
     def controller(self, getExpr, push=True):
+        
         # Controller tombol kalkulator
         if push is not None:
             
@@ -88,7 +89,7 @@ class Calculator(App):
             
             self.pushToForm(getExpr)
             self.__last_input = getExpr        
-
+            
         else:   
             if (getExpr == '='): 
             
@@ -96,6 +97,7 @@ class Calculator(App):
                 # gantikan ANS dengan jawaban terakhir
                 if u"\u221A" in self.display:
                     self.display = self.display.replace(u'\u221A', 'v')
+                    
                 if "ANS" in self.display:
                     try:
                         self.display = self.display.replace("ANS", str(self.__last_answer.result()))
@@ -144,7 +146,7 @@ class Calculator(App):
                 
                 self.__last_input = str(self.__memory.get())
                 self.pushToForm(self.__last_input)
-        
+        print(getExpr)
         # Simpan command terakhir
         self.__last_command = getExpr
         

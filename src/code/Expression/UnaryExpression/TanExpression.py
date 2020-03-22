@@ -8,6 +8,9 @@ class TanExpression(UnaryExpression):
     def __init__(self, value):
         super().__init__(value.solve())
     
+    def __str__(self):
+        return self.solve() 
+    
     def __eq__(self, other):
         if not isinstance(other, TanExpression):
             return NotImplemented
@@ -15,5 +18,5 @@ class TanExpression(UnaryExpression):
         return self.solve() == other.solve()
     
     def solve(self):
-        return math.tan(self.value)
+        return math.tan(math.radians(self.value))
 
