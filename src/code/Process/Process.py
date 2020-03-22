@@ -85,7 +85,7 @@ class Process:
                 return [PowerExpression(expr[0], expr[2])]
             if expr[1] == '%':
                 return [ModExpression(expr[0], expr[2])]
-            
+        
         
         if 'v' in expr:
             i = expr.index('v')
@@ -98,6 +98,10 @@ class Process:
         if '/' in expr or '*' in expr:
             i = expr.index('/' if '/' in expr else '*')
             return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
+        
+        if 'cos' in expr or 'sin' in expr:
+            i = expr.index('cos' if 'cos' in expr else 'sin')
+            return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
         
         else:
             i = expr.index('+' if '+' in expr else '-')
