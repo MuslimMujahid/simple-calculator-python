@@ -1,4 +1,4 @@
-from Calculator import Calculator
+from .App import Calculator
 from tkinter import *
 
 def main():

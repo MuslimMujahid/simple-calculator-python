@@ -1,6 +1,6 @@
 from tkinter import *
-from  tkinter import ttk
-from Buttons import Buttons
+from tkinter import ttk
+from ..Button.Buttons import Buttons
 
 class App:
     

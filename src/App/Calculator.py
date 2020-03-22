@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from Parser import Parser
-from Process import Process
-from App import App
+from ..Process.Parser import Parser
+from ..Process.Process import Process
+from .App import App
 import queue
 import tkinter.font as font
 

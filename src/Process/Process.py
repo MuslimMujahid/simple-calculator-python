@@ -1,13 +1,13 @@
-from Parser import Parser
-from Expression.BaseExpression.Expression import Expression
-from Expression.BinaryExpression.AddExpression import AddExpression
-from Expression.BinaryExpression.SubExpression import SubExpression
-from Expression.BinaryExpression.MulExpression import MulExpression
-from Expression.BinaryExpression.DivExpression import DivExpression
-from Expression.BinaryExpression.PowerExpression import PowerExpression
-from Expression.UnaryExpression.TerminalExpression import TerminalExpression
-from Expression.UnaryExpression.NegativeExpression import NegativeExpression
-from Expression.UnaryExpression.SqrtExpression import SqrtExpression
+from .Parser import Parser
+from ..Expression.BaseExpression import Expression
+from ..Expression.BinaryExpression import AddExpression
+from ..Expression.BinaryExpression import SubExpression
+from ..Expression.BinaryExpression import MulExpression
+from ..Expression.BinaryExpression import DivExpression
+from ..Expression.BinaryExpression import PowerExpression
+from ..Expression.UnaryExpression import TerminalExpression
+from ..Expression.UnaryExpression import NegativeExpression
+from ..Expression.UnaryExpression import SqrtExpression
 
 class Process:
     

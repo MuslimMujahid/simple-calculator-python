@@ -1,5 +1,5 @@
-from Expression.UnaryExpression.TerminalExpression import TerminalExpression
-from Expression.UnaryExpression.NegativeExpression import NegativeExpression
+from ..Expression.UnaryExpression.TerminalExpression import TerminalExpression
+from ..Expression.UnaryExpression.NegativeExpression import NegativeExpression
 import re, collections
 
 class Parser:

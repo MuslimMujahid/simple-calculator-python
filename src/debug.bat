@@ -1,1 +1,0 @@
-python -m Expression.BinaryExpression.DecimalExpression

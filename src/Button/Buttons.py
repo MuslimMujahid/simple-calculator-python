@@ -1,4 +1,4 @@
-from Button import CustomButton
+from .Button import CustomButton
 
 class Buttons:
     
