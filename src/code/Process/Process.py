@@ -63,7 +63,8 @@ class Process:
                     expr[1] is not '+' and 
                     expr[1] is not '-' and
                     expr[1] is not '*' and
-                    expr[1] is not '/'
+                    expr[1] is not '/' and
+                    expr[1] is not '^'
                 )
             ):
                  raise Exception(f'Syntax error near {expr[1]}')
