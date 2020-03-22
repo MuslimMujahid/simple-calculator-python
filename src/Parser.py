@@ -3,7 +3,9 @@ from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 import re, collections
 
 class Parser:
+    
     '''
+    
     Class ini berfungsi untuk melakukan parse
     dari ekspresi yang diterima dalam bentuk string
     kedalam list yang terpisah.
@@ -13,10 +15,14 @@ class Parser:
     akan diubah menjadi
     ['2', '-', '*', '(', '5', '+', '2', ')', '/', '4']
     
-    string : Ekspresi dalam bentuk string
-    self.__expr : List berisi operan dan operator yang
-                  telah dipisahkan dari string 
+    Type
+    self.__expr : list
+    
+    Fungsi
+    self.__expr : menyimpan hasil parsing 
+    
     '''
+    
     def __init__(self, string):
         string = re.findall('[\d.]+|[)(*-/+^v%]', string)
         
@@ -28,6 +34,7 @@ class Parser:
             for i in range(len(string)):
                 if string[i].isnumeric() or '.' in string[i]:
                     string[i] = TerminalExpression(string[i])
+                    
             self.__expr = string                
 
         except IndexError as IE:

@@ -5,7 +5,12 @@ class Buttons:
     '''
     
     Type 
-    self.list 
+    self.__list : list
+    self.__command : objek
+    
+    Fungsi
+    self.__list : menyimpan button yang telah dibuat
+    self.__command : menyimpan controller dari Calculator
     
     '''
     

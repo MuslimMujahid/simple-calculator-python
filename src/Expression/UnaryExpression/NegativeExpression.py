@@ -1,9 +1,8 @@
 from .UnaryExpression import UnaryExpression
 
 class NegativeExpression(UnaryExpression):
-    '''
-    value : TerminalExpression
-    '''
+    
+    ''' value : TerminalExpression '''
     
     def __init__(self, value):
         self.value = value.value()

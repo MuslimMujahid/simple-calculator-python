@@ -10,10 +10,22 @@ from Expression.UnaryExpression.NegativeExpression import NegativeExpression
 from Expression.UnaryExpression.SqrtExpression import SqrtExpression
 
 class Process:
+    
+    '''
+    
+    Type
+    self.__parser : objek Parser()
+    self.__result : float/integer
+
+    Fungsi
+    self.__parser : menyimpan hasil parsing
+    self.__parser : menyimpan hasil perhitungan
+        
+    '''
+    
     def __init__(self, expr):
         self.__parser = Parser(expr)
-        self.__result = self.examine(self.__parser.expression())
-        self.__result = self.__result[0].solve()
+        self.__result = self.examine(self.__parser.expression())[0].solve()
         
         if self.__result.is_integer():
             self.__result = int(self.__result)
@@ -28,6 +40,7 @@ class Process:
                 raise Exception(f'Syntax error near {expr[0]}') 
             
             return expr
+        
         if len(expr) == 2:
             
             if (
@@ -40,6 +53,7 @@ class Process:
                 return [NegativeExpression(expr[1])]
             if expr[0] == 'v':
                 return [SqrtExpression(expr[1])]
+            
         if len(expr) == 3:
             
             if (
