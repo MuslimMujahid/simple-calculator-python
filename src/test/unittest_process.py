@@ -15,7 +15,8 @@ class TestProcess(unittest.TestCase):
             '2*3': 6, 
             '6/3': 2, 
             '2^3': 8, 
-            'v9': 3}
+            'v9': 3
+        }
 
         for k, v in questions.items():
             self.assertEqual(Process(k).result(), v)
@@ -27,7 +28,8 @@ class TestProcess(unittest.TestCase):
             '(2*3)': 6, 
             '(6/3)': 2, 
             '(2^3)': 8, 
-            '(v9)': 3}
+            '(v9)': 3
+        }
 
         for k, v in questions.items():
             self.assertEqual(Process(k).result(), v)

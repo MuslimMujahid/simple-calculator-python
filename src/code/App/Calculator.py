@@ -146,7 +146,7 @@ class Calculator(App):
                 
                 self.__last_input = str(self.__memory.get())
                 self.pushToForm(self.__last_input)
-        print(getExpr)
+
         # Simpan command terakhir
         self.__last_command = getExpr
         

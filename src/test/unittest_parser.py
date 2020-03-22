@@ -12,6 +12,26 @@ class TestParser(unittest.TestCase):
                 TerminalExpression(2)
             ]
         )
+        
+        string = 'v2'
+        self.assertEqual (
+            Parser(string).expression(),
+            [
+                'v',
+                TerminalExpression(2)
+            ]
+        )
+        
+        string = 'cos(2)'
+        self.assertEqual (
+            Parser(string).expression(),
+            [
+                'cos',
+                '(',
+                TerminalExpression(2),
+                ')'
+            ]
+        )
     
     def test_parser_binary(self):
         string = '2+2'

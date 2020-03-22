@@ -38,7 +38,6 @@ class Process:
         return self.__result
 
     def calculate(self, expr):
-        print(expr)
         if len(expr) == 1:
 
             if not isinstance(expr[0], Expression):
@@ -99,8 +98,14 @@ class Process:
             i = expr.index('/' if '/' in expr else '*')
             return self.calculate(expr[:i-1] + self.calculate(expr[i-1:i+2]) + expr[i+2:])
         
-        if 'cos' in expr or 'sin' in expr:
-            i = expr.index('cos' if 'cos' in expr else 'sin')
+        if 'cos' in expr or 'sin' in expr or 'tan' in expr:
+            i = 0
+            if 'cos' in expr:
+                i = expr.index('cos')
+            elif 'sin' in expr:
+                i = expr.index('sin')
+            else:
+                i = expr.index('tan')
             return self.calculate(expr[:i] + self.calculate(expr[i:i+2]) + expr[i+2:])
         
         else:

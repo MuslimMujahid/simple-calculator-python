@@ -25,7 +25,7 @@ class Parser:
     
     def __init__(self, string):
         string = re.findall('[cos|sin|tan]+|[\d.]+|[)(*-/+^v%]', string)
-        print(string)
+
         # Mengubah tiap operan menjadi TerminalExpression
         # dan jika diawali tanda '-'  menjadi NegativeExpression
         try:
@@ -39,8 +39,6 @@ class Parser:
 
         except IndexError as IE:
             raise Exception("The expression at the end of operation is false")
-        
-        print(self.__expr)
-    
+            
     def expression(self):
         return self.__expr
